@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ArrowRight, Phone } from "./icons";
 import Placeholder from "./placeholder";
 
@@ -19,9 +20,13 @@ export default function AboutHospital({
   phone = "+91 90000 00000",
 }: AboutHospitalProps) {
   return (
-    <section
+    <motion.section
       id="about"
       className="mx-auto grid max-w-7xl scroll-mt-24 items-center gap-10 px-6 py-16 lg:grid-cols-2"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-100px" }}
     >
       {/* ── Left: facility photo card ────────────────────────────── */}
       <div className="relative overflow-hidden rounded-3xl border border-white/60 bg-white/90 shadow-glass-lg">
@@ -86,6 +91,6 @@ export default function AboutHospital({
           </a>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

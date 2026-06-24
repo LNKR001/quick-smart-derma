@@ -1,8 +1,26 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { motion, type Variants } from "framer-motion";
 import { ArrowUpRight, Droplet, Scissors, Zap, Syringe, Activity, Smile } from "./icons";
 import { useBooking } from "../booking/booking-context";
+
+/** Container staggers its children; each card fades up one after another. */
+const gridVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 type Category = {
   title: string;
@@ -70,11 +88,17 @@ export default function Services() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        variants={gridVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         {CATEGORIES.map((c) => (
           <CategoryCard key={c.title} {...c} />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -82,7 +106,8 @@ export default function Services() {
 function CategoryCard({ title, blurb, treatments, icon, featured }: Category) {
   const { open } = useBooking();
   return (
-    <article
+    <motion.article
+      variants={cardVariants}
       className={`group relative rounded-3xl border p-6 shadow-glass backdrop-blur-md transition hover:shadow-glass-lg ${
         featured
           ? "border-primary-400/40 bg-card-feature text-white"
@@ -126,6 +151,6 @@ function CategoryCard({ title, blurb, treatments, icon, featured }: Category) {
           </li>
         ))}
       </ul>
-    </article>
+    </motion.article>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ArrowRight, Phone, Sparkle } from "./icons";
 import Placeholder from "./placeholder";
 import { useBooking } from "../booking/booking-context";
@@ -19,7 +20,13 @@ type HeroProps = {
 export default function Hero({ doctorImage, doctorName = "Head Dermatologist" }: HeroProps) {
   const { open } = useBooking();
   return (
-    <section className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 lg:grid-cols-12 lg:py-24">
+    <motion.section
+      className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 lg:grid-cols-12 lg:py-24"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-100px" }}
+    >
       {/* ── Left column ───────────────────────────────────────────── */}
       <div className="lg:col-span-4">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-1.5 text-sm font-medium text-primary shadow-glass backdrop-blur-glass">
@@ -115,7 +122,7 @@ export default function Hero({ doctorImage, doctorName = "Head Dermatologist" }:
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
